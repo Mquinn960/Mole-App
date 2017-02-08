@@ -19,7 +19,7 @@ public class StartActivity extends AppCompatActivity {
         mButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), game.class);
+                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                 startActivity(intent);
             }
         });
@@ -27,7 +27,7 @@ public class StartActivity extends AppCompatActivity {
         mButtonScores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), score.class);
+                Intent intent = new Intent(getApplicationContext(), ScoresActivity.class);
                 startActivity(intent);
             }
         });
