@@ -5,5 +5,7 @@
     <string name="str_button_scores">High Scores</string>
     <string name="str_text_title">Whack A Mole!</string>
 
+    <string name="str_time_label">Time:</string>
+    <string name="str_score_label">Score:</string>
 
 </resources>

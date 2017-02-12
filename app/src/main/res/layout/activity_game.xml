@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Game Activity Main Layouts-->
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,152 +14,234 @@
     tools:context="mquinn.whackamole.GameActivity"
     android:background="#8dbb61">
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:id="@+id/imageHill1"
-        android:src="@drawable/placeholder_hole"
-        android:layout_alignBottom="@+id/imageHill2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+    <!--Start of Top Bar with Hearts and Time-->
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:id="@+id/imageHill2"
-        android:src="@drawable/placeholder_hole"
-        android:layout_above="@+id/imageHill5"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="63dp"/>
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:id="@+id/imageHill3"
-        android:src="@drawable/placeholder_hole"
-        android:layout_alignBottom="@+id/imageHill2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:id="@+id/imageHill4"
-        android:src="@drawable/placeholder_hole"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:id="@+id/imageHill5"
-        android:src="@drawable/placeholder_hole"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:id="@+id/imageHill6"
-        android:src="@drawable/placeholder_hole"
-        android:layout_alignBottom="@+id/imageHill5"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:id="@+id/imageHill7"
-        android:src="@drawable/placeholder_hole"
-        android:layout_alignTop="@+id/imageHill8"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:id="@+id/imageHill8"
-        android:src="@drawable/placeholder_hole"
-        android:layout_alignTop="@+id/imageHill9"
-        android:layout_alignLeft="@+id/imageHill5"
-        android:layout_alignStart="@+id/imageHill5"/>
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:id="@+id/imageHill9"
-        android:src="@drawable/placeholder_hole"
-        android:layout_below="@+id/imageHill6"
-        android:layout_alignLeft="@+id/imageHill6"
-        android:layout_alignStart="@+id/imageHill6"
-        android:layout_marginTop="73dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Time:"
-        android:id="@+id/textTimeLbL"
-        android:textSize="8pt"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageHill2"
-        android:layout_toEndOf="@+id/imageHill2"/>
+        android:id="@+id/topBar">
 
-    <TextView
-        android:layout_width="wrap_content"
+        <!--Health hearts-->
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:id="@+id/imageHeart1"
+            android:src="@drawable/placeholder_heart"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:id="@+id/imageHeart2"
+            android:src="@drawable/placeholder_heart"
+            android:layout_toRightOf="@+id/imageHeart1"
+            android:layout_toEndOf="@+id/imageHeart1"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:id="@+id/imageHeart3"
+            android:src="@drawable/placeholder_heart"
+            android:layout_toRightOf="@+id/imageHeart2"
+            android:layout_toEndOf="@+id/imageHeart2"/>
+
+        <!--Time label and value-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_time_label"
+            android:id="@+id/textTimeLbL"
+            android:textSize="10pt"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/textTimeVal"
+            android:layout_toStartOf="@+id/textTimeVal"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textTimeVal"
+            android:textSize="10pt"
+            android:text="time!"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <!--Linear parent contains 3 relative layout rows to hold molehills -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gameCanvas"
+        android:orientation="vertical"
+        android:weightSum="3.5"
+        android:layout_below="@+id/topBar"
+        android:layout_above="@+id/bottomBar">
+
+        <!--This is a spacer row because moles don't go downwards : )-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:id="@+id/row0"
+            android:orientation="horizontal">
+        </RelativeLayout>
+
+        <!--Row 1-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/row1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/imageHill1"
+                android:src="@drawable/placeholder_hole"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/imageHill2"
+                android:src="@drawable/placeholder_hole"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/imageHill3"
+                android:src="@drawable/placeholder_hole"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <!--Row 2-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/row2"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/imageHill4"
+                android:src="@drawable/placeholder_hole"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/imageHill5"
+                android:src="@drawable/placeholder_hole"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/imageHill6"
+                android:src="@drawable/placeholder_hole"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <!--Row 3-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/row3"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/imageHill7"
+                android:src="@drawable/placeholder_hole"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/imageHill8"
+                android:src="@drawable/placeholder_hole"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/imageHill9"
+                android:src="@drawable/placeholder_hole"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <!--Start of Bottom bar containing score-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textTimeVal"
-        android:layout_alignBottom="@+id/textTimeLbL"
-        android:layout_alignRight="@+id/imageHill3"
-        android:layout_alignEnd="@+id/imageHill3"
-        android:textSize="8pt"
-        android:text="45s"/>
-
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:id="@+id/imageHeart1"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/placeholder_heart"/>
-
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:id="@+id/imageHeart2"
-        android:src="@drawable/placeholder_heart"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/imageHill1"
-        android:layout_alignEnd="@+id/imageHill1"/>
-
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:id="@+id/imageHeart3"
-        android:src="@drawable/placeholder_heart"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/imageHill2"
-        android:layout_toStartOf="@+id/imageHill2"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Score:"
-        android:id="@+id/textScoreLbl"
+        android:id="@+id/bottomBar"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/imageHeart2"
-        android:layout_alignStart="@+id/imageHeart2"
-        android:textSize="12pt"/>
+        android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3025"
-        android:id="@+id/textScoreVal"
-        android:textSize="12pt"
-        android:layout_alignTop="@+id/textScoreLbl"
-        android:layout_toLeftOf="@+id/imageHill9"
-        android:layout_toStartOf="@+id/imageHill9"/>
+        <!--Score label and values-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_score_label"
+            android:id="@+id/textScoreLbl"
+            android:textSize="12pt"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textScoreVal"
+            android:textSize="12pt"
+            android:text="score!"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textScoreLbl"
+            android:layout_toEndOf="@+id/textScoreLbl"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
