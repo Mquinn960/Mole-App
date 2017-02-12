@@ -15,8 +15,9 @@ public class StartActivity extends AppCompatActivity {
 
         Button mButtonStart=(Button) findViewById(R.id.button_start);
         Button mButtonScores=(Button) findViewById(R.id.button_scores);
+        Button mButtonOptions=(Button) findViewById(R.id.button_options);
 
-        // Listeners for each button (go to Play, go to Scores)
+        // Listeners for each button (go to Play, go to Scores, go to Options)
 
         mButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,8 +35,13 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-
-
+        mButtonOptions.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), OptionsActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }
