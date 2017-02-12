@@ -84,18 +84,20 @@
         android:layout_height="match_parent"
         android:id="@+id/gameCanvas"
         android:orientation="vertical"
-        android:weightSum="3.5"
+        android:weightSum="3.75"
         android:layout_below="@+id/topBar"
         android:layout_above="@+id/bottomBar">
 
         <!--This is a spacer row because moles don't go downwards : )-->
+        <!--TODO: Consider adding an art asset here for flavour, overground scene-->
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.5"
             android:id="@+id/row0"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
         </RelativeLayout>
 
         <!--Row 1-->
@@ -208,6 +210,18 @@
                 android:src="@drawable/placeholder_hole"
                 android:layout_centerVertical="true"/>
 
+        </RelativeLayout>
+
+        <!--This is a spacer row because moles don't go downwards in this game : )-->
+        <!--TODO: Consider adding an art asset here for flavour, underground transition-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:id="@+id/row4"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
         </RelativeLayout>
 
     </LinearLayout>
