@@ -29,6 +29,8 @@ public class GameActivity extends AppCompatActivity {
         mTimer = new myTimer(maxTime, stepTime);
         mTimer.start();
 
+        something
+
         m1=(ImageButton) findViewById(R.id.image);
         m2=(ImageButton) findViewById(R.id.imageButton2);
         m3=(ImageButton) findViewById(R.id.imageButton3);
