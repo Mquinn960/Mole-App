@@ -45,8 +45,8 @@
             android:id="@+id/img_start_mole"
             android:src="@drawable/placeholder_mole"
             android:layout_weight="1.6"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"/>
 
         <!--Secondary LinearLayout for Buttons-->
 
@@ -60,7 +60,7 @@
             <!--Buttons the Play Game, Options, High Scores-->
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/str_button_start"
                 android:id="@+id/button_start"
@@ -68,14 +68,14 @@
                 android:layout_marginTop="5dp"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/str_button_scores"
                 android:id="@+id/button_scores"
                 android:layout_weight="1"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/str_button_options"
                 android:id="@+id/button_options"
