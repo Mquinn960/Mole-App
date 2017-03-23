@@ -50,7 +50,27 @@
             android:id="@+id/imageHeart3"
             android:src="@drawable/placeholder_heart"
             android:layout_toRightOf="@+id/imageHeart2"
-            android:layout_toEndOf="@+id/imageHeart2"/>
+            android:layout_toEndOf="@+id/imageHeart2"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:id="@+id/imageHeart4"
+            android:src="@drawable/placeholder_heart"
+            android:layout_toRightOf="@+id/imageHeart3"
+            android:layout_toEndOf="@+id/imageHeart3"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:id="@+id/imageHeart5"
+            android:src="@drawable/placeholder_heart"
+            android:layout_toRightOf="@+id/imageHeart4"
+            android:layout_toEndOf="@+id/imageHeart4"/>
 
         <!--Time label and value-->
 
@@ -117,25 +137,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:weightSum="4">
+                android:weightSum="3"
+                >
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="56dp"
+                android:layout_width="105dp"
+                android:layout_height="49dp"
                 android:layout_weight="1"
                 android:id="@+id/imageHill1"
                 android:src="@drawable/placeholder_hole"/>
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="56dp"
+                android:layout_width="105dp"
+                android:layout_height="49dp"
                 android:layout_weight="1"
                 android:id="@+id/imageHill2"
                 android:src="@drawable/placeholder_hole"/>
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="56dp"
+                android:layout_width="105dp"
+                android:layout_height="49dp"
                 android:layout_weight="1"
                 android:id="@+id/imageHill3"
                 android:src="@drawable/placeholder_hole"/>
@@ -155,25 +176,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:weightSum="3">
+                android:weightSum="3"
+                android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="56dp"
+                android:layout_width="105dp"
+                android:layout_height="49dp"
                 android:layout_weight="1"
                 android:id="@+id/imageHill4"
                 android:src="@drawable/placeholder_hole"/>
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="56dp"
+                android:layout_width="105dp"
+                android:layout_height="49dp"
                 android:layout_weight="1"
                 android:id="@+id/imageHill5"
                 android:src="@drawable/placeholder_hole"/>
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="56dp"
+                android:layout_width="105dp"
+                android:layout_height="49dp"
                 android:layout_weight="1"
                 android:id="@+id/imageHill6"
                 android:src="@drawable/placeholder_hole"/>
@@ -194,25 +216,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:weightSum="3">
+                android:weightSum="3"
+                android:gravity="bottom">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="56dp"
+                android:layout_width="105dp"
+                android:layout_height="49dp"
                 android:layout_weight="1"
                 android:id="@+id/imageHill7"
                 android:src="@drawable/placeholder_hole"/>
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="56dp"
+                android:layout_width="105dp"
+                android:layout_height="49dp"
                 android:layout_weight="1"
                 android:id="@+id/imageHill8"
                 android:src="@drawable/placeholder_hole"/>
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="56dp"
+                android:layout_width="105dp"
+                android:layout_height="49dp"
                 android:layout_weight="1"
                 android:id="@+id/imageHill9"
                 android:src="@drawable/placeholder_hole"/>
