@@ -9,4 +9,7 @@
     <string name="str_time_label">Time:</string>
     <string name="str_score_label">Score:</string>
 
+    <string name="str_end_time">You ran out of time!</string>
+    <string name="str_end_lives">You ran out of lives!</string>
+
 </resources>
