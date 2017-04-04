@@ -5,14 +5,10 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
 
 import java.util.Random;
 import java.util.Timer;
@@ -37,6 +33,8 @@ public class GameActivity extends AppCompatActivity {
     // This is our delay per mole popping up (difficulty)
     public int timeInterval = 1000;
 
+    public CountDownTimer mTimer = new myTimer(maxTime, stepTime);
+
     // Our initial functions, start the timer, start the first moleLoop
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +44,18 @@ public class GameActivity extends AppCompatActivity {
         mTimeView = (TextView) findViewById(R.id.textTimeVal);
         mScoreView = (TextView) findViewById(R.id.textScoreVal);
 
-        CountDownTimer mTimer = new myTimer(maxTime, stepTime);
         mTimer.start();
-
         handler.post(moleLoop);
 
     }
 
     // Public timer class which is handling the game clock
     public class myTimer extends CountDownTimer {
-        public myTimer(int startTime, long interval) {
+
+        public myTimer(int maxTime, long stepTime) {
+
             super(maxTime, stepTime);
+
         }
         @Override
 
@@ -64,6 +63,7 @@ public class GameActivity extends AppCompatActivity {
         public void onFinish() {
 
             // Call endgame class and pass score, reason (due to time out)
+            //this.cancel();
             String messageTime = getString(R.string.str_end_time);
             EndGame(varScore, messageTime);
 
@@ -87,6 +87,7 @@ public class GameActivity extends AppCompatActivity {
                     intent.putExtra("score", Score);
                     intent.putExtra("reason", Reason);
 
+                    mTimer.cancel();
                     finish();
                     startActivity(intent);
 
@@ -101,58 +102,58 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void run () {
 
-            // Building array of moles and their images
-            final ImageView moles [] = new ImageView [9];
+                // Building array of moles and their images
+                final ImageView moles[] = new ImageView[9];
 
-            moles [0] = (ImageView) findViewById(R.id.imageMole1);
-            moles [1] = (ImageView) findViewById(R.id.imageMole2);
-            moles [2] = (ImageView) findViewById(R.id.imageMole3);
-            moles [3] = (ImageView) findViewById(R.id.imageMole4);
-            moles [4] = (ImageView) findViewById(R.id.imageMole5);
-            moles [5] = (ImageView) findViewById(R.id.imageMole6);
-            moles [6] = (ImageView) findViewById(R.id.imageMole7);
-            moles [7] = (ImageView) findViewById(R.id.imageMole8);
-            moles [8] = (ImageView) findViewById(R.id.imageMole9);
+                moles[0] = (ImageView) findViewById(R.id.imageMole1);
+                moles[1] = (ImageView) findViewById(R.id.imageMole2);
+                moles[2] = (ImageView) findViewById(R.id.imageMole3);
+                moles[3] = (ImageView) findViewById(R.id.imageMole4);
+                moles[4] = (ImageView) findViewById(R.id.imageMole5);
+                moles[5] = (ImageView) findViewById(R.id.imageMole6);
+                moles[6] = (ImageView) findViewById(R.id.imageMole7);
+                moles[7] = (ImageView) findViewById(R.id.imageMole8);
+                moles[8] = (ImageView) findViewById(R.id.imageMole9);
 
-            // Pick a mole at random, if you get the same twice, reroll
-            // Slightly less likely to double up
-            varRandMole = new Random().nextInt(8);
-            if(varRandMole == varPrev){
+                // Pick a mole at random, if you get the same twice, reroll
+                // Slightly less likely to double up
                 varRandMole = new Random().nextInt(8);
-            }
-            varPrev = varRandMole;
+                if (varRandMole == varPrev) {
+                    varRandMole = new Random().nextInt(8);
+                }
+                varPrev = varRandMole;
 
-            // Pop the mole up
+                // Pop the mole up
 
-            moles[varRandMole].animate().translationY(-120).setDuration(350);
+                moles[varRandMole].animate().translationY(-120).setDuration(350);
 
 //            // Logging current mole activity
 //            Log.i("GameActivity", "mole info:" + moles[varRandMole].getTranslationY());
 
-            // Timer to pop our mole back down if player fails to hit it
-            // Shuts down any active moles, could probably be revised only to do moles
-            // which have been up for the allotted time Interval
-            new Timer().schedule(new TimerTask() {
-                public void run() {
-                    for (int i = 0; i < 9; i++) {
-                        if (moles[i].getTranslationY() == -120) {
+                // Timer to pop our mole back down if player fails to hit it
+                // Shuts down any active moles, could probably be revised only to do moles
+                // which have been up for the allotted time Interval
+                new Timer().schedule(new TimerTask() {
+                    public void run() {
+                        for (int i = 0; i < 9; i++) {
+                            if (moles[i].getTranslationY() == -120) {
 
-                            // Sets the mole back to its beginning position
-                            moles[i].animate().translationY(0).setDuration(100);
+                                // Sets the mole back to its beginning position
+                                moles[i].animate().translationY(0).setDuration(100);
 
-                            // Deduct a life if we miss a mole
-                            varLives -= 1;
-                            updateLives(varLives);
+                                // Deduct a life if we miss a mole
+                                varLives -= 1;
+                                updateLives(varLives);
 
+                            }
                         }
                     }
-                }
-            }, timeInterval);
+                }, timeInterval);
 
-            // handle mole whacks here
+                handler.postDelayed(moleLoop, timeInterval);
 
-            handler.postDelayed(moleLoop, timeInterval);
-        }
+            }
+
     };
 
     // Handling our life indicators
