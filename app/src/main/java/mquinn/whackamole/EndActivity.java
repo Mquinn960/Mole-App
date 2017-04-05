@@ -17,7 +17,7 @@ public class EndActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int ScoreValue = intent.getExtras().getInt("score");
 
-
+        ScoreCheck.setText(String.valueOf(ScoreValue));
 
     }
 }

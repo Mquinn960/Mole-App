@@ -473,7 +473,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textScoreVal"
             android:textSize="12pt"
-            android:text="score!"
+            android:text="0"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textScoreLbl"
             android:layout_toEndOf="@+id/textScoreLbl"/>

@@ -23,6 +23,7 @@ public class GameActivity extends AppCompatActivity {
     public int varScore = 0;
     private int varLives = 5;
     final Handler handler = new Handler();
+    public boolean varClose = false;
 
     // TODO: get the seconds desired from options screen
     // This is our game length
@@ -32,6 +33,8 @@ public class GameActivity extends AppCompatActivity {
 
     // This is our delay per mole popping up (difficulty)
     public int timeInterval = 1000;
+    // This is the time a mole spends above ground (difficulty)
+    public int moleUpTime = 350;
 
     public CountDownTimer mTimer = new myTimer(maxTime, stepTime);
 
@@ -46,6 +49,24 @@ public class GameActivity extends AppCompatActivity {
 
         mTimer.start();
         handler.post(moleLoop);
+
+        varClose = false;
+
+    }
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+        varClose = true;
+
+    }
+
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+        varClose = true;
 
     }
 
@@ -63,9 +84,13 @@ public class GameActivity extends AppCompatActivity {
         public void onFinish() {
 
             // Call endgame class and pass score, reason (due to time out)
-            //this.cancel();
+            this.cancel();
             String messageTime = getString(R.string.str_end_time);
             EndGame(varScore, messageTime);
+
+            //reset difficulty vars
+            timeInterval = 1000;
+            moleUpTime = 350;
 
         }
 
@@ -75,7 +100,29 @@ public class GameActivity extends AppCompatActivity {
             // Using to set the time view every second (1000ms)
             mTimeView.setText(String.valueOf(millisUntilFinished / 1000));
 
+            // deprecated
+//            if ((millisUntilFinished/1000) == ((maxTime/1000)/1.33)){
+//                // game passes first quarter
+//                increaseDifficulty();
+//            } else if ((millisUntilFinished/1000) == ((maxTime/1000)/2)){
+//                // game passes half way
+//                increaseDifficulty();
+//            } else if ((millisUntilFinished/1000) == ((maxTime/1000)/4)){
+//                // game in last quarter
+//                increaseDifficulty();
+//            }
+
+            if (((millisUntilFinished/1000)%15 == 0) && (millisUntilFinished/1000) != 60){
+                increaseDifficulty();
+            }
+
         }
+    }
+
+    // functions to incrementally increase difficulty
+    public void increaseDifficulty(){
+        timeInterval *= 0.8;
+        moleUpTime *= 0.8;
     }
 
     // Endgame method which passes our intent to EndActivity
@@ -83,8 +130,7 @@ public class GameActivity extends AppCompatActivity {
     public void EndGame(int EndScore, String Reason) {
 
                     Intent intent = new Intent(getApplicationContext(), EndActivity.class);
-                    String Score=String.valueOf(EndScore);
-                    intent.putExtra("score", Score);
+                    intent.putExtra("score", EndScore);
                     intent.putExtra("reason", Reason);
 
                     mTimer.cancel();
@@ -93,11 +139,16 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+
     // Game loop which handles moles popping up at random
     // using a runnable which calls itself every X millis
     public Runnable moleLoop = new Runnable() {
 
         int varPrev;
+
+        public void stopRun (){
+            handler.removeCallbacksAndMessages(null);
+        }
 
         @Override
         public void run () {
@@ -124,8 +175,7 @@ public class GameActivity extends AppCompatActivity {
                 varPrev = varRandMole;
 
                 // Pop the mole up
-
-                moles[varRandMole].animate().translationY(-120).setDuration(350);
+                moles[varRandMole].animate().translationY(-120).setDuration(moleUpTime);
 
 //            // Logging current mole activity
 //            Log.i("GameActivity", "mole info:" + moles[varRandMole].getTranslationY());
@@ -135,11 +185,20 @@ public class GameActivity extends AppCompatActivity {
                 // which have been up for the allotted time Interval
                 new Timer().schedule(new TimerTask() {
                     public void run() {
+
                         for (int i = 0; i < 9; i++) {
                             if (moles[i].getTranslationY() == -120) {
 
+                                final int j = i;
+
                                 // Sets the mole back to its beginning position
-                                moles[i].animate().translationY(0).setDuration(100);
+                                // run this update on the UI thread as we need a looper thread
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        moles[j].animate().translationY(0).setDuration(100);
+                                    }
+                                });
 
                                 // Deduct a life if we miss a mole
                                 varLives -= 1;
@@ -150,9 +209,10 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }, timeInterval);
 
+            if (!varClose) {
                 handler.postDelayed(moleLoop, timeInterval);
-
             }
+        }
 
     };
 
