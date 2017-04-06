@@ -59,6 +59,7 @@ public class GameActivity extends AppCompatActivity {
 
         super.onPause();
         varClose = true;
+        mTimer.cancel();
 
     }
 
@@ -67,6 +68,7 @@ public class GameActivity extends AppCompatActivity {
 
         super.onStop();
         varClose = true;
+        mTimer.cancel();
 
     }
 
@@ -112,7 +114,7 @@ public class GameActivity extends AppCompatActivity {
 //                increaseDifficulty();
 //            }
 
-            if (((millisUntilFinished/1000)%15 == 0) && (millisUntilFinished/1000) != 60){
+            if (((millisUntilFinished/1000)%5 == 0) && (millisUntilFinished/1000) != 60){
                 increaseDifficulty();
             }
 
@@ -121,8 +123,8 @@ public class GameActivity extends AppCompatActivity {
 
     // functions to incrementally increase difficulty
     public void increaseDifficulty(){
-        timeInterval *= 0.8;
-        moleUpTime *= 0.8;
+        timeInterval *= 0.95;
+        moleUpTime *= 0.95;
     }
 
     // Endgame method which passes our intent to EndActivity
@@ -328,7 +330,6 @@ public class GameActivity extends AppCompatActivity {
 
         // Award points, update score
         varScore += 250;
-        //mScoreView.setText(String.valueOf(varScore));
         updateScore(varScore);
 
     }

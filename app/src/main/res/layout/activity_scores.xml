@@ -10,4 +10,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="mquinn.whackamole.ScoresActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="High Scores"
+        android:id="@+id/scoreLabel"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/scoreLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:id="@+id/scoreTable">
+    </TableLayout>
 </RelativeLayout>

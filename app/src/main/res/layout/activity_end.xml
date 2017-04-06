@@ -11,10 +11,70 @@
     tools:context="mquinn.whackamole.EndActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/Score_Test"
+        android:id="@+id/mScoreValue"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="209dp"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mNameEntry"
+        android:layout_below="@+id/mScoreValue"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="123dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Name"
+        android:id="@+id/nameField"
+        android:layout_alignBottom="@+id/mNameEntry"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="55dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game Over!"
+        android:id="@+id/gameOver"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your score:"
+        android:id="@+id/ScoreField"
+        android:layout_alignBottom="@+id/mScoreValue"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="29dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mReasonDisplay"
+        android:layout_below="@+id/gameOver"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit High Score"
+        android:id="@+id/button_Submit"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/mNameEntry"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Main Menu"
+        android:id="@+id/button_Menu"
+        android:layout_below="@+id/button_Submit"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

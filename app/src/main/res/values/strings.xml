@@ -12,4 +12,6 @@
     <string name="str_end_time">You ran out of time!</string>
     <string name="str_end_lives">You ran out of lives!</string>
 
+    <string name="default_name">Unknown</string>
+
 </resources>
