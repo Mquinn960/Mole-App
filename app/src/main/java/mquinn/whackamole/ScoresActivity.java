@@ -1,9 +1,11 @@
 package mquinn.whackamole;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -18,6 +20,8 @@ public class ScoresActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
 
+        Button mMenu = (Button) findViewById(R.id.button_Menu);
+
         final Dbhelper db = new Dbhelper(this);
         final List<Player> dataList;
 
@@ -28,7 +32,7 @@ public class ScoresActivity extends AppCompatActivity {
         Collections.sort(dataList, new Comparator<Player>() {
             @Override
             public int compare(Player playerOne, Player playerTwo) {
-                return playerTwo.getVarScore() - (playerOne.getVarScore()); // Ascending
+                return playerTwo.getVarScore() - playerOne.getVarScore();
             }
 
         });
@@ -49,5 +53,14 @@ public class ScoresActivity extends AppCompatActivity {
             mTableLayout.addView(tableRow);
 
         }
+
+        mMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

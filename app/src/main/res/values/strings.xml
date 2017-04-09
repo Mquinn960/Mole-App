@@ -5,6 +5,13 @@
     <string name="str_button_scores">High Scores</string>
     <string name="str_text_title">Whack A Mole!</string>
     <string name="str_button_options">Options</string>
+    <string name="str_button_main">Main Menu</string>
+    <string name="str_button_submit">Submit High Score</string>
+
+    <string name="str_game_over">Game Over</string>
+
+    <string name="str_your_score">Your Score:</string>
+    <string name="str_name_entry">Enter Name</string>
 
     <string name="str_time_label">Time:</string>
     <string name="str_score_label">Score:</string>

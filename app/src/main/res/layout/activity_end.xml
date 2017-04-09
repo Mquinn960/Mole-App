@@ -8,73 +8,126 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#8dbb61"
     tools:context="mquinn.whackamole.EndActivity">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/mScoreValue"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="209dp"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:weightSum="4">
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/mNameEntry"
-        android:layout_below="@+id/mScoreValue"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="123dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:weightSum="2">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter Name"
-        android:id="@+id/nameField"
-        android:layout_alignBottom="@+id/mNameEntry"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="55dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="@string/str_game_over"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/gameOver"
+                android:textSize="25sp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Game Over!"
-        android:id="@+id/gameOver"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/mReasonDisplay"
+                android:textSize="18sp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your score:"
-        android:id="@+id/ScoreField"
-        android:layout_alignBottom="@+id/mScoreValue"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="29dp"/>
+        </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mReasonDisplay"
-        android:layout_below="@+id/gameOver"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:weightSum="2"
+            android:layout_gravity="center_horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit High Score"
-        android:id="@+id/button_Submit"
-        android:layout_marginTop="26dp"
-        android:layout_below="@+id/mNameEntry"
-        android:layout_centerHorizontal="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/str_your_score"
+                android:gravity="center"
+                android:id="@+id/ScoreField"
+                android:textSize="18sp"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Main Menu"
-        android:id="@+id/button_Menu"
-        android:layout_below="@+id/button_Submit"
-        android:layout_centerHorizontal="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:id="@+id/mScoreValue"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="@string/str_name_entry"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/nameField"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:inputType="text"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/mNameEntry"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:weightSum="3">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/str_button_submit"
+                android:id="@+id/button_Submit"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/str_button_main"
+                android:id="@+id/button_Menu"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package mquinn.whackamole;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +39,9 @@ public class GameActivity extends AppCompatActivity {
 
     public CountDownTimer mTimer = new myTimer(maxTime, stepTime);
 
+    public MediaPlayer mPlayerWhack;
+    public MediaPlayer mPlayerMiss;
+
     // Our initial functions, start the timer, start the first moleLoop
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,25 +56,46 @@ public class GameActivity extends AppCompatActivity {
 
         varClose = false;
 
+        mPlayerWhack = MediaPlayer.create(getApplicationContext(), R.raw.whack);
+        mPlayerMiss = MediaPlayer.create(getApplicationContext(), R.raw.miss);
+
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
 
         super.onPause();
         varClose = true;
         mTimer.cancel();
+//        mPlayerWhack.stop();
+//        mPlayerWhack.release();
+//        mPlayerMiss.stop();
+//        mPlayerMiss.release();
 
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
 
         super.onStop();
         varClose = true;
         mTimer.cancel();
+//        mPlayerWhack.stop();
+//        mPlayerWhack.release();
+//        mPlayerMiss.stop();
+//        mPlayerMiss.release();
 
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        varClose = false;
+
+    }
+
+
 
     // Public timer class which is handling the game clock
     public class myTimer extends CountDownTimer {
@@ -177,6 +202,9 @@ public class GameActivity extends AppCompatActivity {
                 varPrev = varRandMole;
 
                 // Pop the mole up
+                if (mPlayerWhack != null && mPlayerWhack.isPlaying()){
+                    mPlayerWhack.stop();
+                }
                 moles[varRandMole].animate().translationY(-120).setDuration(moleUpTime);
 
 //            // Logging current mole activity
@@ -185,30 +213,36 @@ public class GameActivity extends AppCompatActivity {
                 // Timer to pop our mole back down if player fails to hit it
                 // Shuts down any active moles, could probably be revised only to do moles
                 // which have been up for the allotted time Interval
-                new Timer().schedule(new TimerTask() {
-                    public void run() {
+            new Timer().schedule(new TimerTask() {
+                public void run() {
 
-                        for (int i = 0; i < 9; i++) {
-                            if (moles[i].getTranslationY() == -120) {
+                    for (int i = 0; i < 9; i++) {
+                        if (moles[i].getTranslationY() == -120) {
 
-                                final int j = i;
+                            final int j = i;
 
-                                // Sets the mole back to its beginning position
-                                // run this update on the UI thread as we need a looper thread
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        moles[j].animate().translationY(0).setDuration(100);
-                                    }
-                                });
+                            // Sets the mole back to its beginning position
+                            // run this update on the UI thread as we need a looper thread
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    moles[j].animate().translationY(0).setDuration(100);
+                                }
+                            });
 
-                                // Deduct a life if we miss a mole
-                                varLives -= 1;
-                                updateLives(varLives);
-
+                            // Play miss sound
+                            if (mPlayerMiss.isPlaying()) {
+                                mPlayerMiss.stop();
                             }
+                            mPlayerMiss.start();
+
+                            // Deduct a life if we miss a mole
+                            varLives -= 1;
+                            updateLives(varLives);
+
                         }
                     }
+                }
                 }, timeInterval);
 
             if (!varClose) {
@@ -327,6 +361,11 @@ public class GameActivity extends AppCompatActivity {
                 molesClick[8].animate().translationY(0).setDuration(20);
                 break;
         }
+
+        if (mPlayerWhack != null && mPlayerWhack.isPlaying()){
+            mPlayerWhack.stop();
+        }
+        mPlayerWhack.start();
 
         // Award points, update score
         varScore += 250;
