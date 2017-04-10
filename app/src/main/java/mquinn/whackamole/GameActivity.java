@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
+import java.io.IOException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,7 +30,7 @@ public class GameActivity extends AppCompatActivity {
     // TODO: get the seconds desired from options screen
     // This is our game length
     private int maxTime = 60 * 1000;
-    // Our game timer interval in millis
+    // Our game timer interval in millis, leaving redundant calc to replace with var
     private long stepTime = 1 * 1000;
 
     // This is our delay per mole popping up (difficulty)
@@ -67,9 +68,13 @@ public class GameActivity extends AppCompatActivity {
         super.onPause();
         varClose = true;
         mTimer.cancel();
-//        mPlayerWhack.stop();
+
+        if (mPlayerMiss != null){
+            mPlayerWhack.stop();
+        }
+        mPlayerWhack.stop();
 //        mPlayerWhack.release();
-//        mPlayerMiss.stop();
+        mPlayerMiss.stop();
 //        mPlayerMiss.release();
 
     }
@@ -80,9 +85,9 @@ public class GameActivity extends AppCompatActivity {
         super.onStop();
         varClose = true;
         mTimer.cancel();
-//        mPlayerWhack.stop();
+        mPlayerWhack.stop();
 //        mPlayerWhack.release();
-//        mPlayerMiss.stop();
+        mPlayerMiss.stop();
 //        mPlayerMiss.release();
 
     }
@@ -94,8 +99,6 @@ public class GameActivity extends AppCompatActivity {
         varClose = false;
 
     }
-
-
 
     // Public timer class which is handling the game clock
     public class myTimer extends CountDownTimer {
@@ -161,8 +164,8 @@ public class GameActivity extends AppCompatActivity {
                     intent.putExtra("reason", Reason);
 
                     mTimer.cancel();
-                    finish();
                     startActivity(intent);
+                    this.finish();
 
     }
 
@@ -202,9 +205,6 @@ public class GameActivity extends AppCompatActivity {
                 varPrev = varRandMole;
 
                 // Pop the mole up
-                if (mPlayerWhack != null && mPlayerWhack.isPlaying()){
-                    mPlayerWhack.stop();
-                }
                 moles[varRandMole].animate().translationY(-120).setDuration(moleUpTime);
 
 //            // Logging current mole activity
@@ -243,7 +243,7 @@ public class GameActivity extends AppCompatActivity {
                         }
                     }
                 }
-                }, timeInterval);
+            }, timeInterval);
 
             if (!varClose) {
                 handler.postDelayed(moleLoop, timeInterval);
@@ -300,7 +300,9 @@ public class GameActivity extends AppCompatActivity {
                 }
             });
             String messageLives = getString(R.string.str_end_lives);
-            EndGame(varScore, messageLives);
+            if (!varClose) {
+                EndGame(varScore, messageLives);
+            }
         }
 
     }
@@ -364,7 +366,12 @@ public class GameActivity extends AppCompatActivity {
 
         if (mPlayerWhack != null && mPlayerWhack.isPlaying()){
             mPlayerWhack.stop();
+            mPlayerWhack.reset();
+            mPlayerWhack.release();
         }
+
+        mPlayerWhack = MediaPlayer.create(getApplicationContext(), R.raw.whack);
+
         mPlayerWhack.start();
 
         // Award points, update score
