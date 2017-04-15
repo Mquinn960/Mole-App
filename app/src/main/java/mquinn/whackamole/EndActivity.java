@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EndActivity extends AppCompatActivity {
 
@@ -43,16 +44,19 @@ public class EndActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String playerName = nameBox.getText().toString();
+                if ((nameBox.getText().toString()).equals("")) {
+                    Toast.makeText(EndActivity.this, R.string.str_empty_name, Toast.LENGTH_SHORT).show();
+                } else {
+                    String playerName = nameBox.getText().toString();
 
-                newPlayer.setVarName(playerName);
-                newPlayer.setVarScore(ScoreValue);
+                    newPlayer.setVarName(playerName);
+                    newPlayer.setVarScore(ScoreValue);
 
-                db.addPlayer(newPlayer);
+                    db.addPlayer(newPlayer);
 
-                Intent intent = new Intent(getApplicationContext(), ScoresActivity.class);
-                startActivity(intent);
-
+                    Intent intent = new Intent(getApplicationContext(), ScoresActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

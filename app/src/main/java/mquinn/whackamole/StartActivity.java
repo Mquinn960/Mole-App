@@ -19,29 +19,34 @@ public class StartActivity extends AppCompatActivity {
 
         // Listeners for each button (go to Play, go to Scores, go to Options)
 
-        mButtonStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                startActivity(intent);
-            }
-        });
+        if (mButtonStart != null){
+            mButtonStart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
 
-        mButtonScores.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ScoresActivity.class);
-                startActivity(intent);
-            }
-        });
+        if (mButtonScores != null) {
+            mButtonScores.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), ScoresActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
 
-        mButtonOptions.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), OptionsActivity.class);
-                startActivity(intent);
-            }
-        });
-
+        if (mButtonOptions != null) {
+            mButtonOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), OptionsActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }

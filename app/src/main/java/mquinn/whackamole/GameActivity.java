@@ -1,6 +1,8 @@
 package mquinn.whackamole;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +11,6 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
-
-import java.io.IOException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,6 +42,10 @@ public class GameActivity extends AppCompatActivity {
     public MediaPlayer mPlayerWhack;
     public MediaPlayer mPlayerMiss;
 
+    public String currentDiff;
+
+    public ImageView molesClick [] = new ImageView [9];
+
     // Our initial functions, start the timer, start the first moleLoop
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,9 @@ public class GameActivity extends AppCompatActivity {
         mTimeView = (TextView) findViewById(R.id.textTimeVal);
         mScoreView = (TextView) findViewById(R.id.textScoreVal);
 
+        final SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        currentDiff = sharedPref.getString("saved_difficulty", "Medium");
+
         mTimer.start();
         handler.post(moleLoop);
 
@@ -59,6 +65,17 @@ public class GameActivity extends AppCompatActivity {
 
         mPlayerWhack = MediaPlayer.create(getApplicationContext(), R.raw.whack);
         mPlayerMiss = MediaPlayer.create(getApplicationContext(), R.raw.miss);
+
+        molesClick [0] = (ImageView) findViewById(R.id.imageMole1);
+        molesClick [1] = (ImageView) findViewById(R.id.imageMole2);
+        molesClick [2] = (ImageView) findViewById(R.id.imageMole3);
+        molesClick [3] = (ImageView) findViewById(R.id.imageMole4);
+        molesClick [4] = (ImageView) findViewById(R.id.imageMole5);
+        molesClick [5] = (ImageView) findViewById(R.id.imageMole6);
+        molesClick [6] = (ImageView) findViewById(R.id.imageMole7);
+        molesClick [7] = (ImageView) findViewById(R.id.imageMole8);
+        molesClick [8] = (ImageView) findViewById(R.id.imageMole9);
+
 
     }
 
@@ -130,18 +147,6 @@ public class GameActivity extends AppCompatActivity {
             // Using to set the time view every second (1000ms)
             mTimeView.setText(String.valueOf(millisUntilFinished / 1000));
 
-            // deprecated
-//            if ((millisUntilFinished/1000) == ((maxTime/1000)/1.33)){
-//                // game passes first quarter
-//                increaseDifficulty();
-//            } else if ((millisUntilFinished/1000) == ((maxTime/1000)/2)){
-//                // game passes half way
-//                increaseDifficulty();
-//            } else if ((millisUntilFinished/1000) == ((maxTime/1000)/4)){
-//                // game in last quarter
-//                increaseDifficulty();
-//            }
-
             if (((millisUntilFinished/1000)%5 == 0) && (millisUntilFinished/1000) != 60){
                 increaseDifficulty();
             }
@@ -151,8 +156,21 @@ public class GameActivity extends AppCompatActivity {
 
     // functions to incrementally increase difficulty
     public void increaseDifficulty(){
-        timeInterval *= 0.95;
-        moleUpTime *= 0.95;
+
+        String diff1 = getString(R.string.diff1);
+        String diff3 = getString(R.string.diff3);
+
+        if (currentDiff.equals(diff1)){
+            timeInterval *= 0.99;
+            moleUpTime *= 0.99;
+        } else if (currentDiff.equals(diff3)) {
+            timeInterval *= 0.90;
+            moleUpTime *= 0.90;
+        } else {
+            timeInterval *= 0.95;
+            moleUpTime *= 0.95;
+        }
+
     }
 
     // Endgame method which passes our intent to EndActivity
@@ -169,16 +187,15 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-
     // Game loop which handles moles popping up at random
     // using a runnable which calls itself every X millis
     public Runnable moleLoop = new Runnable() {
 
         int varPrev;
 
-        public void stopRun (){
-            handler.removeCallbacksAndMessages(null);
-        }
+//        public void stopRun (){
+//            handler.removeCallbacksAndMessages(null);
+//        }
 
         @Override
         public void run () {
@@ -196,7 +213,8 @@ public class GameActivity extends AppCompatActivity {
                 moles[7] = (ImageView) findViewById(R.id.imageMole8);
                 moles[8] = (ImageView) findViewById(R.id.imageMole9);
 
-                // Pick a mole at random, if you get the same twice, reroll
+                // TODO: Use a data structure here to guarantee no doubles
+                // Pick a mole at random, if you get the same twice, re-roll
                 // Slightly less likely to double up
                 varRandMole = new Random().nextInt(8);
                 if (varRandMole == varPrev) {
@@ -296,7 +314,7 @@ public class GameActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    heart1.setImageResource(R.drawable.placeholder_heart_empty);
+                        heart1.setImageResource(R.drawable.placeholder_heart_empty);
                 }
             });
             String messageLives = getString(R.string.str_end_lives);
@@ -307,26 +325,13 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    // Aiding modularity by making score updates it's own method
+    // Updates score text field
     public void updateScore(int Score){
         mScoreView.setText(String.valueOf(Score));
     }
 
     // OnClick function for mole objects when we hit them
     public void onClick(View v) {
-
-        // Somewhat redundantly rebuilding our mole array privately
-        final ImageView molesClick [] = new ImageView [9];
-
-        molesClick [0] = (ImageView) findViewById(R.id.imageMole1);
-        molesClick [1] = (ImageView) findViewById(R.id.imageMole2);
-        molesClick [2] = (ImageView) findViewById(R.id.imageMole3);
-        molesClick [3] = (ImageView) findViewById(R.id.imageMole4);
-        molesClick [4] = (ImageView) findViewById(R.id.imageMole5);
-        molesClick [5] = (ImageView) findViewById(R.id.imageMole6);
-        molesClick [6] = (ImageView) findViewById(R.id.imageMole7);
-        molesClick [7] = (ImageView) findViewById(R.id.imageMole8);
-        molesClick [8] = (ImageView) findViewById(R.id.imageMole9);
 
         // Show hit-reg for testing
         //          Toast.makeText(v.getContext(),
@@ -336,33 +341,63 @@ public class GameActivity extends AppCompatActivity {
         // Switch statement to find the right mole and pop him down
         switch(v.getId()) {
             case R.id.imageMole1:
-                molesClick[0].animate().translationY(0).setDuration(20);
+                if (molesClick[0].getTranslationY() < 0) {
+                    molesClick[0].animate().translationY(0).setDuration(20);
+                    directHit();
+                }
                 break;
             case R.id.imageMole2:
-                molesClick[1].animate().translationY(0).setDuration(20);
+                if (molesClick[1].getTranslationY() < 0) {
+                    molesClick[1].animate().translationY(0).setDuration(20);
+                    directHit();
+                }
                 break;
             case R.id.imageMole3:
-                molesClick[2].animate().translationY(0).setDuration(20);
+                if (molesClick[2].getTranslationY() < 0) {
+                    molesClick[2].animate().translationY(0).setDuration(20);
+                    directHit();
+                }
                 break;
             case R.id.imageMole4:
-                molesClick[3].animate().translationY(0).setDuration(20);
+                if (molesClick[3].getTranslationY() < 0) {
+                    molesClick[3].animate().translationY(0).setDuration(20);
+                    directHit();
+                }
                 break;
             case R.id.imageMole5:
-                molesClick[4].animate().translationY(0).setDuration(20);
+                if (molesClick[4].getTranslationY() < 0) {
+                    molesClick[4].animate().translationY(0).setDuration(20);
+                    directHit();
+                }
                 break;
             case R.id.imageMole6:
-                molesClick[5].animate().translationY(0).setDuration(20);
+                if (molesClick[5].getTranslationY() < 0) {
+                    molesClick[5].animate().translationY(0).setDuration(20);
+                    directHit();
+                }
                 break;
             case R.id.imageMole7:
-                molesClick[6].animate().translationY(0).setDuration(20);
+                if (molesClick[6].getTranslationY() < 0) {
+                    molesClick[6].animate().translationY(0).setDuration(20);
+                    directHit();
+                }
                 break;
             case R.id.imageMole8:
-                molesClick[7].animate().translationY(0).setDuration(20);
+                if (molesClick[7].getTranslationY() < 0) {
+                    molesClick[7].animate().translationY(0).setDuration(20);
+                    directHit();
+                }
                 break;
             case R.id.imageMole9:
-                molesClick[8].animate().translationY(0).setDuration(20);
+                if (molesClick[8].getTranslationY() < 0) {
+                    molesClick[8].animate().translationY(0).setDuration(20);
+                    directHit();
+                }
                 break;
         }
+    }
+
+    public void directHit(){
 
         if (mPlayerWhack != null && mPlayerWhack.isPlaying()){
             mPlayerWhack.stop();
@@ -371,7 +406,6 @@ public class GameActivity extends AppCompatActivity {
         }
 
         mPlayerWhack = MediaPlayer.create(getApplicationContext(), R.raw.whack);
-
         mPlayerWhack.start();
 
         // Award points, update score

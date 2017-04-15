@@ -11,4 +11,44 @@
     android:background="#8dbb61"
     tools:context="mquinn.whackamole.OptionsActivity">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblDifficulty"
+            android:text="@string/str_difficulty"
+            android:textSize="20sp"/>
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/diff_spinner"/>
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/str_clear_scores"
+            android:id="@+id/button_clear"/>
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/str_btn_save"
+            android:id="@+id/btn_save"/>
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/str_button_main"
+            android:id="@+id/btn_main"/>
+
+    </LinearLayout>
+
+
 </RelativeLayout>
