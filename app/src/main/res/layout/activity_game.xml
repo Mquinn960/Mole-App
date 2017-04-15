@@ -7,10 +7,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="mquinn.WhackAMole.GameActivity"
     android:background="#8dbb61">
 
@@ -91,7 +87,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textTimeVal"
             android:textSize="10pt"
-            android:text="time!"
+            android:text="@string/default_name"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"/>
 
@@ -107,11 +103,7 @@
         android:weightSum="3.75"
         android:layout_below="@+id/topBar"
         android:layout_above="@+id/bottomBar"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="20dp">
+>
 
         <!--This is a spacer row because moles don't go downwards in this context : )-->
         <!--TODO: Consider adding an art asset here for flavour, overground scene-->
@@ -193,8 +185,6 @@
 
             </LinearLayout>
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
@@ -225,8 +215,6 @@
                 android:src="@drawable/placeholder_hole"
                 android:layout_gravity="center_vertical"/>
             </LinearLayout>
-
-
 
         </RelativeLayout>
 
@@ -442,8 +430,7 @@
             android:layout_height="0dp"
             android:layout_weight="0.25"
             android:id="@+id/row4"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
+            android:orientation="horizontal">
         </RelativeLayout>
 
     </LinearLayout>
@@ -473,7 +460,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textScoreVal"
             android:textSize="12pt"
-            android:text="0"
+            android:text="@string/default_name"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textScoreLbl"
             android:layout_toEndOf="@+id/textScoreLbl"/>
