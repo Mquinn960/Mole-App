@@ -15,9 +15,19 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ *
+ * Author: Matthew Quinn
+ * 25/3/17
+ *
+ * This is our main Game class - it's running the game canvas itself and our actual game
+ * loop using runnables and handlers.
+ *
+ */
+
 public class GameActivity extends AppCompatActivity {
 
-    // Less significant, relatively static declarations
+    // Relatively static initial declarations
     int varRandMole;
     private TextView mTimeView;
     private TextView mScoreView;
@@ -26,10 +36,9 @@ public class GameActivity extends AppCompatActivity {
     final Handler handler = new Handler();
     public boolean varClose = false;
 
-    // TODO: get the seconds desired from options screen
-    // This is our game length
+    // This is our game length (seconds as a function of millis)
     private int maxTime = 60 * 1000;
-    // Our game timer interval in millis, leaving redundant calc to replace with var
+    // Leaving redundant calc which enables seconds to be set using some logic/prefs
     private long stepTime = 1 * 1000;
 
     // This is our delay per mole popping up (difficulty)
@@ -37,6 +46,7 @@ public class GameActivity extends AppCompatActivity {
     // This is the time a mole spends above ground (difficulty)
     public int moleUpTime = 350;
 
+    // Main game countdown
     public CountDownTimer mTimer = new myTimer(maxTime, stepTime);
 
     public MediaPlayer mPlayerWhack;
@@ -46,7 +56,6 @@ public class GameActivity extends AppCompatActivity {
 
     public ImageView molesClick [] = new ImageView [9];
 
-    // Our initial functions, start the timer, start the first moleLoop
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +64,11 @@ public class GameActivity extends AppCompatActivity {
         mTimeView = (TextView) findViewById(R.id.textTimeVal);
         mScoreView = (TextView) findViewById(R.id.textScoreVal);
 
+        // Get saved difficulty, default to Medium if no pref exists
         final SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         currentDiff = sharedPref.getString("saved_difficulty", "Medium");
 
+        // Start the game!
         mTimer.start();
         handler.post(moleLoop);
 
@@ -76,36 +87,36 @@ public class GameActivity extends AppCompatActivity {
         molesClick [7] = (ImageView) findViewById(R.id.imageMole8);
         molesClick [8] = (ImageView) findViewById(R.id.imageMole9);
 
-
     }
+
+    /**
+     * Some android specific class methods to better handle some back-behaviour
+     * such as stopping game sounds and the async timer when user navigates away from the main game.
+     * Using a boolean to determine tell the logic whether activity is running or not (I can't
+     * believe there isn't a better way of doing this).
+     */
 
     @Override
     public void onPause() {
-
         super.onPause();
+
         varClose = true;
         mTimer.cancel();
 
-        if (mPlayerMiss != null){
-            mPlayerWhack.stop();
-        }
         mPlayerWhack.stop();
-//        mPlayerWhack.release();
         mPlayerMiss.stop();
-//        mPlayerMiss.release();
 
     }
 
     @Override
     public void onStop() {
-
         super.onStop();
+
         varClose = true;
         mTimer.cancel();
+
         mPlayerWhack.stop();
-//        mPlayerWhack.release();
         mPlayerMiss.stop();
-//        mPlayerMiss.release();
 
     }
 
@@ -119,9 +130,7 @@ public class GameActivity extends AppCompatActivity {
 
     // Public timer class which is handling the game clock
     public class myTimer extends CountDownTimer {
-
         public myTimer(int maxTime, long stepTime) {
-
             super(maxTime, stepTime);
 
         }
@@ -135,18 +144,19 @@ public class GameActivity extends AppCompatActivity {
             String messageTime = getString(R.string.str_end_time);
             EndGame(varScore, messageTime);
 
-            //reset difficulty vars
+            // Reset difficulty vars
             timeInterval = 1000;
             moleUpTime = 350;
 
         }
 
-        // Ticker called every #millis until done
+        // Ticker called every x millis until done
         public void onTick(long millisUntilFinished) {
 
-            // Using to set the time view every second (1000ms)
+            // Using to set the time value every second (1000ms)
             mTimeView.setText(String.valueOf(millisUntilFinished / 1000));
 
+            // Ramp the difficulty up every 5 seconds
             if (((millisUntilFinished/1000)%5 == 0) && (millisUntilFinished/1000) != 60){
                 increaseDifficulty();
             }
@@ -154,12 +164,14 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    // functions to incrementally increase difficulty
+    // Functions to incrementally increase difficulty
     public void increaseDifficulty(){
 
         String diff1 = getString(R.string.diff1);
         String diff3 = getString(R.string.diff3);
 
+        // When difficulty increase is called, decrease time between moles, and surface time by
+        // an amount based on the current difficulty
         if (currentDiff.equals(diff1)){
             timeInterval *= 0.99;
             moleUpTime *= 0.99;
@@ -173,101 +185,80 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    // Endgame method which passes our intent to EndActivity
-    // Intents passed are our final score, and the reason the game is over
+    // End the game! Extras passed are our final score, and the reason the game is over
     public void EndGame(int EndScore, String Reason) {
 
-                    Intent intent = new Intent(getApplicationContext(), EndActivity.class);
-                    intent.putExtra("score", EndScore);
-                    intent.putExtra("reason", Reason);
+        Intent intent = new Intent(getApplicationContext(), EndActivity.class);
+        intent.putExtra("score", EndScore);
+        intent.putExtra("reason", Reason);
 
-                    mTimer.cancel();
-                    startActivity(intent);
-                    this.finish();
+        mTimer.cancel();
+        startActivity(intent);
+        this.finish();
 
     }
 
-    // Game loop which handles moles popping up at random
-    // using a runnable which calls itself every X millis
+    // Game loop is a runnable which calls itself every timeInterval (millis)
     public Runnable moleLoop = new Runnable() {
 
-        int varPrev;
-
-//        public void stopRun (){
-//            handler.removeCallbacksAndMessages(null);
-//        }
+        int varPrevRandMole = 10;
 
         @Override
         public void run () {
 
-                // Building array of moles and their images
-                final ImageView moles[] = new ImageView[9];
-
-                moles[0] = (ImageView) findViewById(R.id.imageMole1);
-                moles[1] = (ImageView) findViewById(R.id.imageMole2);
-                moles[2] = (ImageView) findViewById(R.id.imageMole3);
-                moles[3] = (ImageView) findViewById(R.id.imageMole4);
-                moles[4] = (ImageView) findViewById(R.id.imageMole5);
-                moles[5] = (ImageView) findViewById(R.id.imageMole6);
-                moles[6] = (ImageView) findViewById(R.id.imageMole7);
-                moles[7] = (ImageView) findViewById(R.id.imageMole8);
-                moles[8] = (ImageView) findViewById(R.id.imageMole9);
-
-                // TODO: Use a data structure here to guarantee no doubles
-                // Pick a mole at random, if you get the same twice, re-roll
-                // Slightly less likely to double up
+                // Pick a mole at random, if you get the same twice, re-roll until it's different
                 varRandMole = new Random().nextInt(8);
-                if (varRandMole == varPrev) {
+
+                if (varRandMole == varPrevRandMole){
+                    do
                     varRandMole = new Random().nextInt(8);
+                    while (varRandMole == varPrevRandMole);
                 }
-                varPrev = varRandMole;
+
+                varPrevRandMole = varRandMole;
 
                 // Pop the mole up
-                moles[varRandMole].animate().translationY(-120).setDuration(moleUpTime);
-
-//            // Logging current mole activity
-//            Log.i("GameActivity", "mole info:" + moles[varRandMole].getTranslationY());
+                molesClick[varRandMole].animate().translationY(-120).setDuration(moleUpTime);
 
                 // Timer to pop our mole back down if player fails to hit it
-                // Shuts down any active moles, could probably be revised only to do moles
-                // which have been up for the allotted time Interval
-            new Timer().schedule(new TimerTask() {
-                public void run() {
+                new Timer().schedule(new TimerTask() {
+                    public void run() {
 
-                    for (int i = 0; i < 9; i++) {
-                        if (moles[i].getTranslationY() == -120) {
+                        if (!varClose) {
 
-                            final int j = i;
+                            for (int i = 0; i < 9; i++) {
+                                if (molesClick[i].getTranslationY() == -120) {
 
-                            // Sets the mole back to its beginning position
-                            // run this update on the UI thread as we need a looper thread
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    moles[j].animate().translationY(0).setDuration(100);
+                                    final int j = i;
+
+                                    // Sets the mole back to its beginning position
+                                    // run this update on the UI thread as we need a "looper" thread
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            molesClick[j].animate().translationY(0).setDuration(100);
+                                        }
+                                    });
+
+                                    if (mPlayerMiss.isPlaying()) {
+                                        mPlayerMiss.stop();
+                                        mPlayerMiss.start();
+                                    }
+
+                                    // Deduct a life if we miss a mole
+                                    varLives -= 1;
+                                    updateLives(varLives);
+
                                 }
-                            });
-
-                            // Play miss sound
-                            if (mPlayerMiss.isPlaying()) {
-                                mPlayerMiss.stop();
                             }
-                            mPlayerMiss.start();
-
-                            // Deduct a life if we miss a mole
-                            varLives -= 1;
-                            updateLives(varLives);
-
                         }
                     }
+                }, timeInterval);
+
+                if (!varClose) {
+                    handler.postDelayed(moleLoop, timeInterval);
                 }
-            }, timeInterval);
-
-            if (!varClose) {
-                handler.postDelayed(moleLoop, timeInterval);
-            }
         }
-
     };
 
     // Handling our life indicators
@@ -280,41 +271,49 @@ public class GameActivity extends AppCompatActivity {
         final ImageView heart5= (ImageView) findViewById(R.id.imageHeart5);
 
         // Start taking off lives, when none are left, call our game end method
-        // These are run using main UI thread in a runnable as we cannot update UI resources
-        // from without the main thread otherwise
         if (Lives == 4){
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    heart5.setImageResource(R.drawable.placeholder_heart_empty);
+                    if (heart5 != null){
+                        heart5.setImageResource(R.drawable.placeholder_heart_empty);
+                    }
                 }
             });
         } else if (Lives == 3){
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    heart4.setImageResource(R.drawable.placeholder_heart_empty);
+                    if (heart4 != null) {
+                        heart4.setImageResource(R.drawable.placeholder_heart_empty);
+                    }
                 }
             });
         } else if (Lives == 2) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    heart3.setImageResource(R.drawable.placeholder_heart_empty);
+                    if (heart3 != null){
+                        heart3.setImageResource(R.drawable.placeholder_heart_empty);
+                    }
                 }
             });
         } else if (Lives == 1){
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    heart2.setImageResource(R.drawable.placeholder_heart_empty);
+                    if (heart2 != null) {
+                        heart2.setImageResource(R.drawable.placeholder_heart_empty);
+                    }
                 }
             });
         } else if (Lives == 0){
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    if (heart1 != null) {
                         heart1.setImageResource(R.drawable.placeholder_heart_empty);
+                    }
                 }
             });
             String messageLives = getString(R.string.str_end_lives);
@@ -334,7 +333,8 @@ public class GameActivity extends AppCompatActivity {
     public void onClick(View v) {
 
         // Show hit-reg for testing
-        //          Toast.makeText(v.getContext(),
+
+        //         Toast.makeText(v.getContext(),
         //                "Hit Registered",
         //                Toast.LENGTH_LONG).show();
 
@@ -397,6 +397,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    // When mole is hit, play sound and update score
     public void directHit(){
 
         if (mPlayerWhack != null && mPlayerWhack.isPlaying()){
@@ -411,9 +412,7 @@ public class GameActivity extends AppCompatActivity {
         // Award points, update score
         varScore += 250;
         updateScore(varScore);
-
     }
-
 }
 
 

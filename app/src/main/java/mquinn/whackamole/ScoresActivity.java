@@ -8,10 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+/**
+ *
+ * Author: Matthew Quinn
+ * 10/4/17
+ *
+ * Our scoreboard class
+ *
+ */
 
 public class ScoresActivity extends AppCompatActivity {
 
@@ -50,17 +58,21 @@ public class ScoresActivity extends AppCompatActivity {
             playerName.setText(varName);
             playerScore.setText(String.valueOf(varScore));
 
-            mTableLayout.addView(tableRow);
+            if (mTableLayout != null){
+                mTableLayout.addView(tableRow);
+            }
 
         }
 
-        mMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-                startActivity(intent);
-            }
-        });
+        if (mMenu != null){
+            mMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 package mquinn.whackamole;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+/**
+ *
+ * Author: Matthew Quinn
+ * 5/4/17
+ *
+ * Class for the end of the game, used to display some information on the game end such as score
+ * and reason for end. Also has the text field to submit your score under your name.
+ *
+ */
 
 public class EndActivity extends AppCompatActivity {
 
@@ -25,49 +36,64 @@ public class EndActivity extends AppCompatActivity {
         Button mMenu = (Button) findViewById(R.id.button_Menu);
 
         final EditText nameBox = (EditText)findViewById(R.id.mNameEntry);
-
         final Player newPlayer = new Player();
 
+        // Get the extras our Intent sent through
         Intent intent = getIntent();
         final int ScoreValue = intent.getExtras().getInt("score");
         String ReasonValue = intent.getExtras().getString("reason");
 
         final Dbhelper db = new Dbhelper(this);
 
+        // Populate our new Player object's Name and Score
         newPlayer.setVarName(defaultName);
         newPlayer.setVarScore(ScoreValue);
 
-        ScoreCheck.setText(String.valueOf(ScoreValue));
-        ReasonCheck.setText(ReasonValue);
+        if (ScoreCheck != null){
+            ScoreCheck.setText(String.valueOf(ScoreValue));
+        }
 
-        mSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (ReasonCheck != null){
+            ReasonCheck.setText(ReasonValue);
+        }
 
-                if ((nameBox.getText().toString()).equals("")) {
-                    Toast.makeText(EndActivity.this, R.string.str_empty_name, Toast.LENGTH_SHORT).show();
-                } else {
-                    String playerName = nameBox.getText().toString();
+        // Submit button saves the Player score
+        if (mSubmit != null){
+            mSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                    newPlayer.setVarName(playerName);
-                    newPlayer.setVarScore(ScoreValue);
+                    // Validate text box - shouldn't be empty
+                    if (nameBox != null) {
+                        if ((nameBox.getText().toString()).equals("")) {
+                            Toast.makeText(EndActivity.this, R.string.str_empty_name, Toast.LENGTH_SHORT).show();
+                        } else {
 
-                    db.addPlayer(newPlayer);
+                            // Upon submit, add player to the database and take us to the scoreboard
+                            String playerName = nameBox.getText().toString();
 
-                    Intent intent = new Intent(getApplicationContext(), ScoresActivity.class);
+                            newPlayer.setVarName(playerName);
+                            newPlayer.setVarScore(ScoreValue);
+
+                            db.addPlayer(newPlayer);
+
+                            Intent intent = new Intent(getApplicationContext(), ScoresActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                }
+            });
+        }
+
+        // Menu button goes back to the main menu
+        if (mMenu != null){
+            mMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), StartActivity.class);
                     startActivity(intent);
                 }
-            }
-        });
-
-        mMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-                startActivity(intent);
-            }
-        });
-
+            });
+        }
     }
-
 }

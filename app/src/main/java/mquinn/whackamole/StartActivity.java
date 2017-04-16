@@ -6,6 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ *
+ * Author: Matthew Quinn
+ * 25/3/17
+ *
+ * Player class for holding score and name vars associated with the current player
+ *
+ */
+
 public class StartActivity extends AppCompatActivity {
 
     @Override
@@ -18,7 +27,6 @@ public class StartActivity extends AppCompatActivity {
         Button mButtonOptions=(Button) findViewById(R.id.button_options);
 
         // Listeners for each button (go to Play, go to Scores, go to Options)
-
         if (mButtonStart != null){
             mButtonStart.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -28,7 +36,6 @@ public class StartActivity extends AppCompatActivity {
                 }
             });
         }
-
         if (mButtonScores != null) {
             mButtonScores.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -38,7 +45,6 @@ public class StartActivity extends AppCompatActivity {
                 }
             });
         }
-
         if (mButtonOptions != null) {
             mButtonOptions.setOnClickListener(new View.OnClickListener() {
                 @Override

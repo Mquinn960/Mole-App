@@ -1,8 +1,15 @@
 package mquinn.whackamole;
 
 /**
- * Created by Mquinn on 05/04/2017.
+ *
+ * Author: Matthew Quinn
+ * 10/4/17
+ *
+ * Player class for holding score and name vars associated with the current player.
+ * Just has getters and setters.
+ *
  */
+
 public class Player {
 
     String varName;

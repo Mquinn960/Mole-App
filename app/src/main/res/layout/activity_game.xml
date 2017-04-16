@@ -418,8 +418,6 @@
                 android:layout_gravity="center_vertical"/>
             </LinearLayout>
 
-
-
         </RelativeLayout>
 
         <!--This is a spacer row because moles don't go downwards in this game : )-->
