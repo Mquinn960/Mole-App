@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,6 +57,8 @@ public class GameActivity extends AppCompatActivity {
 
     public ImageView molesClick [] = new ImageView [9];
 
+    public int yValue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +89,13 @@ public class GameActivity extends AppCompatActivity {
         molesClick [6] = (ImageView) findViewById(R.id.imageMole7);
         molesClick [7] = (ImageView) findViewById(R.id.imageMole8);
         molesClick [8] = (ImageView) findViewById(R.id.imageMole9);
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        // Scale mole translation based on device dimensions
+        int sHeight = metrics.heightPixels;
+        yValue = (sHeight/12)*-1;
 
     }
 
@@ -218,7 +228,7 @@ public class GameActivity extends AppCompatActivity {
                 varPrevRandMole = varRandMole;
 
                 // Pop the mole up
-                molesClick[varRandMole].animate().translationY(-160).setDuration(moleUpTime);
+                molesClick[varRandMole].animate().translationY(yValue).setDuration(moleUpTime);
 
                 // Timer to pop our mole back down if player fails to hit it
                 new Timer().schedule(new TimerTask() {
@@ -227,7 +237,7 @@ public class GameActivity extends AppCompatActivity {
                         if (!varClose) {
 
                             for (int i = 0; i < 9; i++) {
-                                if (molesClick[i].getTranslationY() == -160) {
+                                if (molesClick[i].getTranslationY() == yValue) {
 
                                     final int j = i;
 
