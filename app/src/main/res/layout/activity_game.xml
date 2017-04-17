@@ -15,6 +15,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:id="@+id/topBar"
         >
 
@@ -87,7 +90,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textTimeVal"
             android:textSize="10pt"
-            android:text="@string/default_name"
+            android:text="@string/zero"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"/>
 
@@ -103,9 +106,8 @@
         android:weightSum="3.75"
         android:layout_below="@+id/topBar"
         android:layout_above="@+id/bottomBar"
->
+        >
 
-        <!--This is a spacer row because moles don't go downwards in this context : )-->
         <!--TODO: Consider adding an art asset here for flavour, overground scene-->
 
         <RelativeLayout
@@ -313,8 +315,6 @@
                 android:id="@+id/imageHill6"
                 android:src="@drawable/placeholder_hole"/>
             </LinearLayout>
-
-
 
         </RelativeLayout>
 

@@ -218,7 +218,7 @@ public class GameActivity extends AppCompatActivity {
                 varPrevRandMole = varRandMole;
 
                 // Pop the mole up
-                molesClick[varRandMole].animate().translationY(-120).setDuration(moleUpTime);
+                molesClick[varRandMole].animate().translationY(-160).setDuration(moleUpTime);
 
                 // Timer to pop our mole back down if player fails to hit it
                 new Timer().schedule(new TimerTask() {
@@ -227,7 +227,7 @@ public class GameActivity extends AppCompatActivity {
                         if (!varClose) {
 
                             for (int i = 0; i < 9; i++) {
-                                if (molesClick[i].getTranslationY() == -120) {
+                                if (molesClick[i].getTranslationY() == -160) {
 
                                     final int j = i;
 

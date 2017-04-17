@@ -17,7 +17,8 @@ import java.util.List;
  * Author: Matthew Quinn
  * 10/4/17
  *
- * Our scoreboard class
+ * Our scoreboard class, takes our player scores and lists them in a table made of
+ * scoreitem and scoretable XMLs
  *
  */
 
@@ -37,6 +38,7 @@ public class ScoresActivity extends AppCompatActivity {
 
         dataList = db.getAll();
 
+        // Sort operation to sort our Players by high score descending
         Collections.sort(dataList, new Comparator<Player>() {
             @Override
             public int compare(Player playerOne, Player playerTwo) {
@@ -45,6 +47,7 @@ public class ScoresActivity extends AppCompatActivity {
 
         });
 
+        // Loop our rows and add to our table using LayoutInflater
         for (int i = 0; i < dataList.size(); i++) {
 
             View tableRow = LayoutInflater.from(this).inflate(R.layout.scoreitem,null,false);

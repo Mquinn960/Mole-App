@@ -11,7 +11,7 @@ import android.widget.Button;
  * Author: Matthew Quinn
  * 25/3/17
  *
- * Player class for holding score and name vars associated with the current player
+ * Start screen, simple splash with 3 buttons to start, view scores and visit options
  *
  */
 
