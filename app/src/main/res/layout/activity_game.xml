@@ -8,17 +8,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="mquinn.WhackAMole.GameActivity"
-    android:background="#8dbb61">
+    android:background="@color/grass">
 
     <!--Start of Top Bar with Hearts and Time-->
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:id="@+id/topBar"
+        android:background="@color/sky"
         >
 
         <!--Health hearts-->
@@ -27,9 +25,9 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:id="@+id/imageHeart1"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
             android:src="@drawable/placeholder_heart"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"/>
 
@@ -37,6 +35,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:id="@+id/imageHeart2"
+            android:layout_marginTop="5dp"
             android:src="@drawable/placeholder_heart"
             android:layout_toRightOf="@+id/imageHeart1"
             android:layout_toEndOf="@+id/imageHeart1"
@@ -47,6 +46,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:id="@+id/imageHeart3"
+            android:layout_marginTop="5dp"
             android:src="@drawable/placeholder_heart"
             android:layout_toRightOf="@+id/imageHeart2"
             android:layout_toEndOf="@+id/imageHeart2"
@@ -57,6 +57,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:id="@+id/imageHeart4"
+            android:layout_marginTop="5dp"
             android:src="@drawable/placeholder_heart"
             android:layout_toRightOf="@+id/imageHeart3"
             android:layout_toEndOf="@+id/imageHeart3"
@@ -67,6 +68,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:id="@+id/imageHeart5"
+            android:layout_marginTop="5dp"
             android:src="@drawable/placeholder_heart"
             android:layout_toRightOf="@+id/imageHeart4"
             android:layout_toEndOf="@+id/imageHeart4"/>
@@ -83,7 +85,8 @@
             android:layout_toLeftOf="@+id/textTimeVal"
             android:layout_toStartOf="@+id/textTimeVal"
             android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"/>
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -92,7 +95,10 @@
             android:textSize="10pt"
             android:text="@string/zero"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"/>
 
     </RelativeLayout>
 
@@ -116,7 +122,7 @@
             android:layout_weight="0.5"
             android:id="@+id/row0"
             android:orientation="horizontal"
-            android:layout_marginTop="5dp">
+            android:background="@drawable/hills">
         </RelativeLayout>
 
         <!--Row 1-->
@@ -180,7 +186,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#8dbb61"
+                    android:background="#7abb3c"
                     android:layout_weight="1"
                     >
                 </LinearLayout>
@@ -281,7 +287,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#8dbb61"
+                    android:background="#7abb3c"
                     android:layout_weight="1"
                     >
                 </LinearLayout>
@@ -380,7 +386,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#8dbb61"
+                    android:background="#7abb3c"
                     android:layout_weight="1"
                     >
                 </LinearLayout>
@@ -428,7 +434,8 @@
             android:layout_height="0dp"
             android:layout_weight="0.25"
             android:id="@+id/row4"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@drawable/underground">
         </RelativeLayout>
 
     </LinearLayout>
@@ -440,6 +447,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/bottomBar"
         android:layout_alignParentBottom="true"
+        android:background="@color/underground"
         android:gravity="center">
 
         <!--Score label and values-->

@@ -12,7 +12,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#8dbb61"
+    android:background="@color/grass"
     tools:context=".StartActivity">
 
     <!--Parent is a LinearLayout, weights used to divide up elements for scalability-->

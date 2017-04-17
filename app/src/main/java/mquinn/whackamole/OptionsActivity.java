@@ -22,6 +22,8 @@ import android.widget.Toast;
  * Options class - handles some preferences and settings.
  * Have added option to clear out the database and a difficulty setting spinner
  *
+ * TODO: Use an onSelect listener for the spinner to negate need for save button
+ *
  */
 
 public class OptionsActivity extends AppCompatActivity{

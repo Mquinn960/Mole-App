@@ -236,14 +236,16 @@ public class GameActivity extends AppCompatActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            molesClick[j].animate().translationY(0).setDuration(100);
+                                            molesClick[j].animate().translationY(0).setDuration(5);
                                         }
                                     });
 
-                                    if (mPlayerMiss.isPlaying()) {
+                                    if (mPlayerMiss.isPlaying() && mPlayerMiss != null) {
                                         mPlayerMiss.stop();
-                                        mPlayerMiss.start();
+                                        mPlayerMiss.reset();
+                                        mPlayerMiss.release();
                                     }
+                                    mPlayerMiss.start();
 
                                     // Deduct a life if we miss a mole
                                     varLives -= 1;
